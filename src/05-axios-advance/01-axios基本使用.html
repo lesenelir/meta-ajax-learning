@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>axios基本使用</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button onclick="testGet()">GET请求</button>
+    <button onclick="testPost()">POST请求</button>
+    <button onclick="testPut()">PUT请求</button>
+    <button onclick="testDelete()">DELETE请求</button>
+
+    <script>
+
+      axios.defaults.baseURL = 'http://localhost:3000'
+
+      // 1. GET请求： 向服务器请求数据
+      function testGet() {
+        axios({
+          url: '/posts',
+          params: {
+            id: 1
+          }
+        }).then(response => {
+          console.log('/posts GET', response.data)
+        })
+      }
+
+      // 2. POST请求： 向服务器获得添加数据
+      function testPost() {
+        axios({
+          url: '/posts',
+          method: 'post',
+          data: {"title": "json-server", "author": "typicode4"}
+        }).then(response => {
+          console.log('/posts POST', response.data)
+        })
+      }
+
+      // 3. PUT请求： 更新服务端数据
+      function testPut() {
+        axios({
+          url: '/posts/2',
+          method: 'put',
+          data: {"title": "json-server", "author": "typicode2"}
+        }).then(response => {
+          console.log('/posts PUT', response.data)
+        })
+      }
+
+      // 4. DELETE请求： 删除服务端数据
+      function testDelete() {
+        axios({
+          url: '/posts/1',
+          method: 'delete',
+        }).then(response => {
+          console.log('/posts DELETE', response.data)
+        })
+      }
+
+    </script>
+
+  </body>
+</html>
