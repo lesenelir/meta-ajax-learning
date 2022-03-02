@@ -3,10 +3,10 @@ const express = require('express')
 const app = express()
 
 app.all('/axios-server', (request, response) => {
-  // CROS 解决跨域
+  // CORS 解决跨域
   response.setHeader('Access-Control-Allow-Origin', '*')
   response.setHeader('Access-Control-Allow-Headers', '*')
-  
+  response.setHeader('Access-Control-Allow-Method', '*')
   // 设置响应体
   const data = {
     name: 'lesenelir'
