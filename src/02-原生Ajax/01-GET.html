@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> Ajax GET 请求 </title>
+    <style>
+      #result {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Ajax不进行页面的刷新就可以获得请求数据</p>
+    <p>点击按钮获得响应体内容</p>
+    <button>点击发送请求</button>
+    <div id="result"></div>
+
+    <script>
+      const btn = document.querySelectorAll("button")[0]
+      const result = document.querySelector('#result')
+      // 绑定事件
+      btn.onclick = function () {
+        // 进行Ajax操作有四个步骤：
+
+        // 1. 创建对象
+        const xhr = new XMLHttpRequest()
+        // 2. open方法 初始化 设置请求方法和url
+        xhr.open('GET', 'http://127.0.0.1:8000/server')
+        // 3. send方法 发送
+        xhr.send()
+        // 4. 事件绑定处理服务端返回的结果
+        // readystate 是xhr对象中的属性， 表示状态 0 1 2 3 4
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) { // 判断服务端返回的所有结果
+            if (xhr.status >= 200 && xhr.status < 300) { // 判断响应状态码
+              // 处理 行、头、空行、体
+              // （1）响应行
+              console.log(xhr.status) // 状态码
+              console.log(xhr.statusText) // 状态字符串
+              console.log(xhr.getAllResponseHeaders()) // 所有响应头
+              console.log(xhr.response) // 响应体
+
+              // 设置result
+              result.innerHTML = xhr.response
+            }
+          }
+        }
+
+      }
+
+    </script>
+  </body>
+</html>
