@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>axios 取消请求</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <button>获得请求</button>
+    <button>取消请求</button>
+
+    <script>
+      const btns = document.querySelectorAll('button')
+
+      axios.defaults.baseURL = 'http://localhost:3000'
+
+      // 2. 声明全局变量
+      let cancel = null
+
+      // 发送请求
+      btns[0].onclick = function () {
+        // 检测上一次请求是否已经完成
+        if (cancel !== null)
+
+        axios({
+          method: 'GET',
+          url: '/posts',
+          // 1. 添加配置对象的属性
+          cancelToken: new axios.CancelToken(function (c) {
+            cancel = c
+          })
+        }).then(response => {
+          cancel = null
+
+          console.log(response)
+        })
+      }
+
+      // 取消请求
+     btns[1].onclick = function () {
+       cancel()
+     }
+
+    </script>
+
+  </body>
+</html>

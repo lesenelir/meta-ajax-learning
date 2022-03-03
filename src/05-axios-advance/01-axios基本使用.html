@@ -6,56 +6,64 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <button onclick="testGet()">GET请求</button>
-    <button onclick="testPost()">POST请求</button>
-    <button onclick="testPut()">PUT请求</button>
-    <button onclick="testDelete()">DELETE请求</button>
+    <button>GET请求</button>
+    <button>POST请求</button>
+    <button>PUT请求</button>
+    <button>DELETE请求</button>
 
     <script>
+      const btns = document.querySelectorAll('button')
 
+      // axios默认配置
       axios.defaults.baseURL = 'http://localhost:3000'
 
-      // 1. GET请求： 向服务器请求数据
-      function testGet() {
+      // 1. GET 请求
+      btns[0].onclick = function () {
         axios({
+          method: 'GET',
+          url: '/posts'
+        }).then(response => {
+          console.log(response)
+        })
+      }
+
+      // 2. POST 请求  -  添加一篇新的文章
+      btns[1].onclick = function () {
+        axios({
+          method: 'POST',
           url: '/posts',
-          params: {
-            id: 1
+          // 设置请求体
+          data: {
+            title: 'json-server3',
+            author: 'typicode3'
           }
         }).then(response => {
-          console.log('/posts GET', response.data)
+          console.log(response)
         })
       }
 
-      // 2. POST请求： 向服务器获得添加数据
-      function testPost() {
+      // 3. PUT 请求  -  更新数据
+      btns[2].onclick = function () {
         axios({
-          url: '/posts',
-          method: 'post',
-          data: {"title": "json-server", "author": "typicode4"}
+          method: 'PUT',
+          url: '/posts/3',
+          // 设置请求体
+          data: {
+            title: 'json-server3',
+            author: 'PUTAuthor3'
+          }
         }).then(response => {
-          console.log('/posts POST', response.data)
+          console.log(response)
         })
       }
 
-      // 3. PUT请求： 更新服务端数据
-      function testPut() {
+      // 4. Delete 请求  -  删除数据
+      btns[3].onclick = function () {
         axios({
-          url: '/posts/2',
-          method: 'put',
-          data: {"title": "json-server", "author": "typicode2"}
-        }).then(response => {
-          console.log('/posts PUT', response.data)
-        })
-      }
-
-      // 4. DELETE请求： 删除服务端数据
-      function testDelete() {
-        axios({
-          url: '/posts/1',
           method: 'delete',
+          url: '/posts/3'
         }).then(response => {
-          console.log('/posts DELETE', response.data)
+          console.log(response)
         })
       }
 
